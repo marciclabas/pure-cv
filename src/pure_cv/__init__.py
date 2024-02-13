@@ -1,5 +1,8 @@
 from .opencv import imread, grayscale, threshold, dilate, erode, cvtColor, imdecode
-from .plot import show
+try:
+  from .plot import show
+except ImportError:
+  ...
 from .encoding import b64encode, b64decode, encode, decode
 from .colors import mod_color
 from .misc import black
