@@ -15,10 +15,11 @@ def decode(img: bytes, flags = cv.IMREAD_UNCHANGED) -> cv.Mat:
     return cv.imdecode(arr, flags)
 
 @R.curry
-def b64encode(img: cv.Mat, format: str = ".png") -> str:
+def b64encode(img: cv.Mat, format: str = ".png", url_safe: bool = True) -> str:
     """Encode `img` into a Base64 string"""
     _, encoded = cv.imencode(format, img)
-    return base64.urlsafe_b64encode(encoded).decode("utf-8")
+    b64 = base64.urlsafe_b64encode(encoded) if url_safe else base64.b64encode(encoded)
+    return b64.decode("utf-8")
 
 def b64decode(b64img: str) -> cv.Mat:
     b = base64.urlsafe_b64decode(b64img)
