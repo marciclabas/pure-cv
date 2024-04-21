@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pure-cv"
-version = "0.1.7"
+version = "0.1.8"
 authors = [
     {name="Marcel Claramunt", email="marcel@moveread.com"}
 ]
@@ -12,7 +12,8 @@ description = "Purely functional tools for Python OpenCV "
 dependencies = [
     "ramda",
     "numpy",
-    "opencv-python"
+    "opencv-python",
+    "lazy-loader"
 ]
 requires-python = ">=3.10"
 readme = {file="README.md", content-type="text/markdown"}
