@@ -1,7 +1,6 @@
 from typing import Literal
 import cv2 as cv
-
-Rotation = Literal[90, 180, -90]
+from .types import Rotation
 
 def code(rot: Rotation) -> int:
   if rot == 90:
