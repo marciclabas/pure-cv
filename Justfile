@@ -24,3 +24,9 @@ patch:
 
 # Build and publish
 republish: patch build publish
+
+init:
+  rm -drf {{VENV}} || :
+  python3.11 -m venv {{VENV}}
+  {{PYTHON}} -m pip install --upgrade pip
+  {{PYTHON}} -m pip install -r requirements.txt

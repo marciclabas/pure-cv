@@ -1,4 +1,5 @@
-from .types import Rotation
+from .types_ import Rotation
+from .img_types import Img, Img2D, Img3D
 from .opencv import imread, grayscale, threshold, dilate, erode, cvtColor, imdecode
 try:
   from .plot import show
@@ -19,5 +20,6 @@ __all__ = [
   'black',
   'descale_h', 'rescale_h',
   'rotate', 'Rotation',
-  'draw'
+  'draw',
+  'Img', 'Img2D', 'Img3D',
 ]

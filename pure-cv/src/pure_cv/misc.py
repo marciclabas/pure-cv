@@ -1,6 +1,5 @@
+from jaxtyping import UInt8
 import numpy as np
 
-_3 = int; W = int; H = int
-
-def black(width: int, height: int) -> np.ndarray[tuple[H, W, _3], np.uint8]:
+def black(width: int, height: int) -> UInt8[np.ndarray, 'height width 3']:
     return np.zeros((height, width, 3), dtype=np.uint8)

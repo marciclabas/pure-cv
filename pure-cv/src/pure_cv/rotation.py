@@ -1,6 +1,7 @@
 from typing import Literal
 import cv2 as cv
-from .types import Rotation
+from .types_ import Rotation
+from .img_types import Img
 
 def code(rot: Rotation) -> int:
   if rot == 90:
@@ -12,7 +13,7 @@ def code(rot: Rotation) -> int:
   else:
     raise ValueError(f'Invalid rotation {rot}')
   
-def rotate(img: cv.Mat, rotation: Rotation | Literal[0]) -> cv.Mat:
+def rotate(img: Img, rotation: Rotation | Literal[0]) -> Img:
   if rotation == 0:
     return img
   return cv.rotate(img, code(rotation))
