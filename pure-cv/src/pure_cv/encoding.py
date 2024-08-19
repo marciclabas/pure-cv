@@ -4,7 +4,7 @@ import numpy as np
 import cv2 as cv
 import numpy as np
 import ramda as R
-from .img_types import Img
+from .types_ import Img
 
 @overload
 def encode(img: Img, format: Literal[".png", ".jpg", ".webp"]) -> bytes: ...

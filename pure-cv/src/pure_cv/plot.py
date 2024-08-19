@@ -2,7 +2,7 @@ import math
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
-from .img_types import Img
+from .types_ import Img
 
 def show(
   *inputs: Img | tuple[str, Img],

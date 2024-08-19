@@ -1,4 +1,4 @@
-from .types_ import Rotation, Img, Img2D, Img3D, Contour, BBox
+from .types_ import Rotation, Img, Img2D, Img3D, Contour, Contours, BBox, Corners, Vec2
 from .opencv import imread, grayscale, threshold, dilate, erode, cvtColor, imdecode
 try:
   from .plot import show
@@ -20,5 +20,5 @@ __all__ = [
   'descale_h', 'rescale_h',
   'rotate', 'Rotation',
   'draw',
-  'Img', 'Img2D', 'Img3D', 'Contour', 'BBox',
+  'Img', 'Img2D', 'Img3D', 'Contour', 'BBox', 'Contours', 'Corners', 'Vec2',
 ]

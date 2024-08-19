@@ -3,7 +3,7 @@ from jaxtyping import Shaped
 import cv2 as cv
 import numpy as np
 import ramda as R
-from ..img_types import Img
+from ..types_ import Img
 
 Vec2 = Shaped[np.ndarray, '2']
 Vertices = Shaped[np.ndarray, 'N 2'] | Sequence[Vec2]

@@ -1,7 +1,7 @@
 from typing import Literal
 import cv2 as cv
 from .types_ import Rotation
-from .img_types import Img
+from .types_ import Img
 
 def code(rot: Rotation) -> int:
   if rot == 90:

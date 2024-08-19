@@ -1,7 +1,7 @@
 from typing import Callable, overload
 import cv2 as cv
 import ramda as R
-from .img_types import Img
+from .types_ import Img
 
 @overload
 def rescale_h(img: Img, /, height: int) -> Img: ...
