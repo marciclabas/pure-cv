@@ -22,4 +22,8 @@ class Corners(TypedDict):
   br: Vec2
   bl: Vec2
 
+class Rect(TypedDict):
+  tl: Vec2
+  size: Vec2
+
 Rotation = Literal[90, 180, -90]
