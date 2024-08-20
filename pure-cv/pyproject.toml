@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pure-cv"
-version = "0.1.22"
+version = "0.2.2"
 authors = [
     {name="Marcel Claramunt", email="marcel@moveread.com"}
 ]
@@ -15,6 +15,7 @@ dependencies = [
     "opencv-python",
     "lazy-loader",
     "jaxtyping",
+    "nudantic"
 ]
 requires-python = ">=3.10"
 readme = {file="README.md", content-type="text/markdown"}

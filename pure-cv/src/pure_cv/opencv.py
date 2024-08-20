@@ -4,10 +4,6 @@ import numpy as np
 import ramda as R
 from .types_ import Img2D, Img
 
-Mat3x3 = cv.Mat
-_N = int
-_2 = int
-
 @R.curry
 def imdecode(img, flags = cv.IMREAD_UNCHANGED) -> Img:
   return cv.imdecode(img, flags)
@@ -42,7 +38,7 @@ def dilate(*, kernel: cv.Mat, iterations: int) -> Callable[[Img], Img]: ...
 
 @R.curry
 def dilate(src: Img, /, kernel: cv.Mat, iterations: int) -> Img: # type: ignore
-    return cv.dilate(src, kernel=kernel, iterations=iterations)
+  return cv.dilate(src, kernel=kernel, iterations=iterations)
 
 @overload
 def erode(src: Img, /, kernel: cv.Mat, iterations: int) -> Img: ...
@@ -51,4 +47,4 @@ def erode(*, kernel: cv.Mat, iterations: int) -> Callable[[Img], Img]: ...
 
 @R.curry
 def erode(src: Img, /, kernel: cv.Mat, iterations: int) -> Img: # type: ignore
-    return cv.erode(src, kernel=kernel, iterations=iterations)
+  return cv.erode(src, kernel=kernel, iterations=iterations)

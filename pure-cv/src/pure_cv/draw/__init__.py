@@ -1,1 +1,1 @@
-from .draw import contours, vertices, lines, hlines, vlines
+from .draw import contours, bboxes, vertices, lines, hlines, vlines
