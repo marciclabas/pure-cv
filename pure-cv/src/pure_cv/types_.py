@@ -22,6 +22,9 @@ Vertices = Annotated[NdArray, 'N 2'] | Sequence[Vec2]
 Corners = Annotated[NdArray, '4 2']
 """`tl, tr, br, bl`"""
 
+Segment = Annotated[NdArray, '1 4'] | Sequence[Sequence[float]]
+Segments = Annotated[NdArray, 'N 1 4'] | Sequence[Segment]
+
 Mat3 = Annotated[NdArray, '3 3']
 
 class Rect(TypedDict):

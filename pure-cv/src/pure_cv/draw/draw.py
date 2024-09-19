@@ -48,22 +48,61 @@ def hlines( # type: ignore
     ls = np.array([[[0, y, width-1, y]] for y in ys], dtype=np.int32)
     return lines(img, ls, color=color, thickness=thickness)
 
-Segment = Shaped[np.ndarray, '1 4']
-Segments = Shaped[np.ndarray, 'N 1 4'] | Sequence[Segment]
+
 
 @overload
-def lines(img: vc.Img, /, lines: Segments, *, color: int | tuple[int, int, int] = (255, 0, 0), thickness: int = 3) -> vc.Img: ...
+def lines(img: vc.Img, /, lines: vc.Segments, *, color: int | tuple[int, int, int] = (255, 0, 0), thickness: int = 3) -> vc.Img: ...
 @overload
-def lines(*, lines: Segments, color: int | tuple[int, int, int] = (255, 0, 0), thickness: int = 3) -> Callable[[vc.Img], vc.Img]: ...
+def lines(*, lines: vc.Segments, color: int | tuple[int, int, int] = (255, 0, 0), thickness: int = 3) -> Callable[[vc.Img], vc.Img]: ...
 @R.curry
 def lines( # type: ignore
-  img: vc.Img, /, lines: Segments, color: int | tuple[int, int, int] = (255, 0, 0), thickness: int = 3
+  img: vc.Img, /, lines: vc.Segments, color: int | tuple[int, int, int] = (255, 0, 0), thickness: int = 3
 ) -> vc.Img: # type: ignore
   out = img.copy()
   for line in lines:
     x1, y1, x2, y2 = line[0]
     cv.line(out, [x1, y1], [x2, y2], color=color, thickness=thickness) # type: ignore
   return out
+
+@overload
+def dashed_lines(
+  img: vc.Img, /, lines: vc.Segments, *, 
+  color: int | tuple[int, int, int] = (255, 0, 0), 
+  thickness: int = 3, dash_length: int = 10, gap_length: int = 10
+) -> vc.Img: ...
+
+@overload
+def dashed_lines(
+  *, lines: vc.Segments, 
+  color: int | tuple[int, int, int] = (255, 0, 0), 
+  thickness: int = 3, dash_length: int = 10, gap_length: int = 10
+) -> Callable[[vc.Img], vc.Img]: ...
+
+@R.curry
+def dashed_lines( # type: ignore
+  img: vc.Img, /, lines: vc.Segments, 
+  color: int | tuple[int, int, int] = (255, 0, 0), 
+  thickness: int = 3, dash_length: int = 10, gap_length: int = 10
+) -> vc.Img:
+    out = img.copy()
+
+    for line in lines:
+      x1, y1, x2, y2 = line[0]
+      pt1 = np.array([x1, y1])
+      pt2 = np.array([x2, y2])
+      length = np.linalg.norm(pt2 - pt1)
+
+      # Calculate the number of dashes symmetrically
+      pattern_length = dash_length + gap_length
+      dashes = int(length // pattern_length)
+      start_offset = (length - dashes * pattern_length) / 2
+      
+      for i in range(dashes):
+        start = pt1 + (pt2 - pt1) * ((i * pattern_length + start_offset) / length)
+        end = pt1 + (pt2 - pt1) * ((i * pattern_length + start_offset + dash_length) / length)
+        cv.line(out, tuple(start.astype(int)), tuple(end.astype(int)), color=color, thickness=thickness) # type: ignore
+
+    return out
 
 
 @overload

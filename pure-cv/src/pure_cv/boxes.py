@@ -26,17 +26,6 @@ def contour2bbox(contours: vc.Contour | vc.Contours) -> vc.BBox | vc.BBoxes:
   BR = np.stack([X2, Y2], axis=-1) # (N, 2)
   return np.stack([TL, BR], axis=-2) # (N, 2, 2)
 
-# def roi_old(
-#   img: vc.Img, contour: vc.Contour, *,
-#   l = 0.1, r = 0.1, t = 0.15, b = 0.25
-# ) -> vc.Img:
-#   x, y, w, h = cv.boundingRect(np.array(contour, dtype=np.float32)) # just in case, other types fail!
-#   top = max(int(y - t*h), 0)
-#   bot = int(y + (1+b)*h)
-#   left = max(int(x - l*w), 0)
-#   right = int(x + (1+r)*w)
-#   return img[top:bot, left:right]
-
 def roi(
   img: vc.Img, contour: vc.Contour, *,
   l = 0.1, r = 0.1, t = 0.15, b = 0.25
@@ -44,6 +33,21 @@ def roi(
   """Extract a 4-corner contour by persective correcting it to a rectangle"""
   return vc.corners.correct(img, contour, l=l, r=r, t=t, b=b)
 
+
+
+def pad_bboxes(bboxes: vc.BBoxes, *, l=0., r=0., t=0., b=0.) -> vc.BBoxes:
+  """Pad bounding boxes, with padding relative to their shapes"""
+  x0 = bboxes[..., 0, 0]
+  y0 = bboxes[..., 0, 1]
+  x1 = bboxes[..., 1, 0]
+  y1 = bboxes[..., 1, 1]
+  w = x1 - x0
+  h = y1 - y0
+  top = y0 - t*h
+  left = x0 - l*w
+  bottom = y1 + b*h
+  right = x1 + r*w
+  return np.stack([np.stack([left, top], axis=-1), np.stack([right, bottom], axis=-1)], axis=-2)
 
 def extract_contours(img: vc.Img, contours: vc.Contours, **pads: Unpack[vc.Pads]) -> list[vc.Img]:
   """Extract contours from an image"""
