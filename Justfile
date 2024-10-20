@@ -20,7 +20,7 @@ publish:
 
 # Increase patch version
 patch:
-  $BUMP {{PKG}}/pyproject.toml
+  $CIT_SCRIPTS/bump.sh {{PKG}}/pyproject.toml
 
 # Build and publish
 republish: patch build publish

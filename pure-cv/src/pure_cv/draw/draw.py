@@ -120,6 +120,34 @@ def contours( # type: ignore
     
   return cv.drawContours(outimg, [np.array(c, dtype=np.int32) for c in contours], -1, color, thickness) # type: ignore
 
+
+@overload
+def gradient_contours(
+  img: vc.Img, /, cnts: vc.Contours, *,
+  color0=(255, 0, 0), color1=(0, 255, 0),
+  cycle: int | None = None
+) -> vc.Img: ...
+@overload
+def gradient_contours(
+  cnts: vc.Contours, *,
+  color0=(255, 0, 0), color1=(0, 255, 0),
+  cycle: int | None = None
+) -> Callable[[vc.Img], vc.Img]: ...
+@R.curry
+def gradient_contours( # type: ignore
+  img: vc.Img, cnts: vc.Contours, *,
+  color0=(255, 0, 0), color1=(0, 255, 0),
+  cycle: int | None = None
+) -> vc.Img:
+  cycle = cycle or len(cnts)
+  c0, c1 = np.array(color0), np.array(color1)
+  img = img.copy()
+  for i, cnt in enumerate(cnts):
+    alpha = i % cycle / cycle
+    color = (c0 * (1 - alpha) + c1 * alpha).astype(np.uint8).tolist()
+    img = vc.draw.contours(img, np.array([cnt]), color=tuple(color))
+  return img
+
 @overload
 def bboxes(img: vc.Img, /, bboxes: vc.BBoxes, *, color: int | tuple[int, int, int] = (255, 0, 0), thickness: int = 3) -> vc.Img: ...
 @overload

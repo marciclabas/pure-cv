@@ -1,1 +1,1 @@
-from .draw import contours, bboxes, vertices, lines, hlines, vlines, dashed_lines
+from .draw import contours, bboxes, vertices, lines, hlines, vlines, dashed_lines, gradient_contours
